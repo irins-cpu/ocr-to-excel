@@ -100,7 +100,7 @@ Copy code:
 ```bash
 python test_table.py
 ```
-The processed Excel file will appear in the output/ folder as `results.xlsx.`
+The processed Excel file will appear in the output/ folder as `results.xlsx`.
 
 ---
 ## 📁 Project Structure
