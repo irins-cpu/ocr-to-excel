@@ -1,98 +1,159 @@
-OCR-to-Excel Tool
-This project automates the extraction of printed and handwritten text from scanned paper sheets and saves the recognized data into a structured Excel file.
+# 📄 OCR-to-Excel Tool
+
+This project automates the extraction of printed and handwritten text from scanned paper sheets and saves the recognized data into a structured Excel file.  
 
 It was developed and tested during an internship as a prototype OCR pipeline.
 
-📌 What It Does
-Processes scanned warehouse forms in .jpg / .png format.
+---
 
-Extracts tabular data from the roll list pages, including:
+## 📌 What It Does
 
-Roll number (e.g., B12947)
+- Processes scanned **warehouse forms** in `.jpg` / `.png` format.  
 
-Format (mm)
+- Extracts tabular data from the **roll list pages**, including:  
 
-Weight (kg)
+  - Roll number (e.g., `B12947`)  
 
-Grammage (g/m²)
+  - Format (mm)  
 
-Comment (if handwritten)
+  - Weight (kg)  
 
-Saves the structured data into output/results.xlsx.
-Produces debug images and logs in /output/.
+  - Grammage (g/m²)  
 
-⚠️ Title pages (the first page of each delivery sheet) are intentionally not processed — the program only reads the tables with roll data.
+  - Comment (if handwritten)  
 
-🛠 Technologies Used
-Python 3.11
-EasyOCR — multilingual text detection
-OpenCV — image preprocessing and table segmentation
-Pandas + OpenPyXL — Excel export
-Pillow — image handling
-Tesseract OCR — for mixed Cyrillic/Latin text
+- Saves the structured data into `output/results.xlsx`.  
 
-⚙️ Installation
+- Produces debug images and logs in `/output/`.
 
-Install Tesseract OCR
-Download: Tesseract at UB Mannheim
-Install to the default path: C:\Program Files\Tesseract-OCR
-During installation, include English and Russian language packs.
-Add to PATH: C:\Program Files\Tesseract-OCR
+> ⚠️ Title pages (the first page of each delivery sheet) are intentionally **not processed** --- the program only reads the tables with roll data.
+
+---
+
+## 🛠 Technologies Used
+
+- **Python 3.11**
+
+- **EasyOCR** --- multilingual text detection  
+
+- **OpenCV** --- image preprocessing and table segmentation  
+
+- **Pandas + OpenPyXL** --- Excel export  
+
+- **Pillow** --- image handling  
+
+- **Tesseract OCR** --- for mixed Cyrillic/Latin text
+
+---
+
+## ⚙️ Installation
+
+### 1. Install Tesseract OCR
+
+- Download: [Tesseract at UB Mannheim](https://github.com/UB-Mannheim/tesseract/wiki)  
+
+- Install to the default path:  
+
+  `C:\Program Files\Tesseract-OCR`
+
+- During installation, include **English** and **Russian** language packs.  
+
+- Add to PATH:
+
+`C:\Program Files\Tesseract-OCR`
+
+
+
 Verify installation:
+
+`
 tesseract --version
+`
+### 2\. Clone Repository & Create Virtual Environment
 
-Clone Repository & Create Virtual Environment
+
+
+
+Copy code:
+
+```bash
 git clone <your-repo-url>
+
 cd ocr_to_excel
+
 python -m venv venv
-venv\Scripts\activate # on Windows
 
-Install Dependencies
+venv\Scripts\activate   # on Windows
+```
+### 3\. Install Dependencies
+
+
+
+Copy code:
+```bash
 pip install -r requirements.txt
+```
+### 4\. Run the Tool
 
-Run the Tool
+
+Copy code:
+```bash
 python test_table.py
-
+```
 The processed Excel file will appear in the output/ folder as results.xlsx.
 
-📁 Project Structure
+---
+## 📁 Project Structure
+
+```graphql
 ocr_to_excel/
-├── input/ # Folder for input images (JPG/PNG)
-├── output/ # Debug images + Excel results
-├── venv/ # Virtual environment
-├── ocr_engine.py # Core OCR logic
-├── test_table.py # Main script for testing OCR
-├── requirements.txt # Dependencies
-├── README.md # Documentation
+├── input/              # Folder for input images (JPG/PNG)
+├── output/             # Debug images + Excel results
+├── venv/               # Virtual environment
+├── ocr_engine.py       # Core OCR logic
+├── test_table.py       # Main script for testing OCR
+├── requirements.txt    # Dependencies
+├── README.md           # Documentation
 └── .gitignore
+```
 
-🧪 Experimental Results (Handwritten + Printed Tables)
-Field | Accuracy | Notes
-Roll Number | ~30% | Some numbers correctly detected (e.g., B12952), others missed or misread
-Format (mm) | ~45% | Detects printed numbers, but columns sometimes shift
-Weight (kg) | ~25% | Often confused with grammage
-Grammage (g/m²) | ~20% | Rarely recognized correctly
-Comment (handwritten) | <15% | OCR fails on cursive handwriting
-Overall Accuracy: ≈ 27%
+## 🧪 Experimental Results (Handwritten + Printed Tables)
 
-📉 Limitations & Observations
-Handwritten Cyrillic text is rarely recognized — both EasyOCR and Tesseract fail on cursive styles.
-Table segmentation with OpenCV works on clean scans but struggles when grid lines are faint or broken.
-Mixed Cyrillic and Latin text (e.g., B vs В) often leads to character confusion.
-Windows.Media.Ocr (via winsdk) gave higher accuracy but is unreliable across systems and versions.
+| Field | Accuracy | Notes |
+|--------|-----------|-------|
+| Roll Number | ~30% | Some numbers correctly detected (e.g., B12952), others missed or misread |
+| Format (mm) | ~45% | Detects printed numbers, but columns sometimes shift |
+| Weight (kg) | ~25% | Often confused with grammage |
+| Grammage (g/m²) | ~20% | Rarely recognized correctly |
+| Comment (handwritten) | <15% | OCR fails on cursive handwriting |
+| **Overall Accuracy** | **≈ 27%** | — |
 
-💡 Future Improvements
-Use a hybrid approach:
+## 📉 Limitations & Observations
 
-Detect table layout via machine learning (e.g., Detectron or YOLO layout models)
+- Handwritten Cyrillic text is rarely recognized --- both EasyOCR and Tesseract fail on cursive styles.
 
-Combine OCR from Google Vision or ABBYY Cloud for higher accuracy
+- Table segmentation with OpenCV works on clean scans but struggles when grid lines are faint or broken.
 
-Build a simple Tkinter GUI for file selection and batch processing
+- Mixed Cyrillic and Latin text (e.g., B vs В) often leads to character confusion.
 
-Add a post-processing correction module using regex validation and fuzzy matching for roll numbers
+- Windows.Media.Ocr (via winsdk) gave higher accuracy but is unreliable across systems and versions.
 
-📋 Status
+## 💡 Future Improvements
+
+Hybrid approach:
+
+- Detect table layout via machine learning (e.g., Detectron or YOLO layout models)
+
+- Combine OCR from Google Vision or ABBYY Cloud for higher accuracy.
+
+- Build a simple Tkinter GUI for file selection and batch processing.
+
+- Add a post-processing correction module using regex validation and fuzzy matching for roll numbers.
+
+## 📋 Status
+
 🚧 Prototype Stage (Internship Project)
-Recognizes around 25–30% of text fields correctly on real scanned forms.
-Suitable for further research and integration testing — not for production use yet.
+
+**Recognizes around 25--30% of text fields correctly on real scanned forms.**
+
+Suitable for further research and integration testing --- not for production use yet.
